@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "name": "Bueaty house",
+      "type": "House",
+      "price": 12000  
+    },
+    {
+      "id": 2,
+      "name": "Modern house",
+      "type": "House",
+      "price": 12500  
+    },
+    {
+      "id": 3,
+      "name": "Classic house",
+      "type": "House",
+      "price": 13000  
+    },
+    {
+      "id": 4,
+      "name": "Tiny house",
+      "type": "House",
+      "price": 13500  
+    },
+    {
+      "id": 5,
+      "name": "White house",
+      "type": "House",
+      "price": 14000  
+    },
+    {
+      "id": 6,
+      "name": "Elegant house",
+      "type": "House",
+      "price": 14500  
+    }
+]
