@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "alertifyjs": "^1.13.1",
     "@angular/animations": "^14.1.0",
     "@angular/common": "^14.1.0",
     "@angular/compiler": "^14.1.0",

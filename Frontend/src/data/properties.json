@@ -1,36 +1,47 @@
 [
     {
       "id": 1,
+      "sellRent": 1,
       "name": "Bueaty house",
       "type": "House",
-      "price": 12000  
+      "price": 12000,
+      "image": "prop-1"  
     },
     {
       "id": 2,
+      "sellRent": 2,
       "name": "Modern house",
       "type": "House",
-      "price": 12500  
+      "price": 12500,
+      "image": "prop-2"  
     },
     {
       "id": 3,
+      "sellRent": 1,
       "name": "Classic house",
       "type": "House",
-      "price": 13000  
+      "price": 13000,
+      "image": "prop-3"  
     },
     {
       "id": 4,
+      "sellRent": 1,
       "name": "Tiny house",
       "type": "House",
-      "price": 13500  
+      "price": 13500,
+      "image": "prop-3"  
     },
     {
       "id": 5,
+      "sellRent": 1,
       "name": "White house",
       "type": "House",
-      "price": 14000  
+      "price": 14000,
+      "image": "prop-5"  
     },
     {
       "id": 6,
+      "sellRent": 1,
       "name": "Elegant house",
       "type": "House",
       "price": 14500  

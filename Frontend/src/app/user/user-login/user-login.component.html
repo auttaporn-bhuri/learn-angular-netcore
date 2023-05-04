@@ -1,0 +1,51 @@
+<!-- Template
+<div class="row">
+    <div class="col-6 m-auto">
+        <div class="card m-auto">
+            <div class="card-header">
+                header
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group col-12">
+                        <label>Label</label>
+                        <input class="form-control" required>
+                    </div>
+                    <div class="form-group col-12">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-secondary ms-2">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+-->
+
+<div class="row">
+    <div class="col-6 m-auto">
+        <div class="card m-auto">
+            <div class="card-header">
+                Login
+            </div>
+            <div class="card-body">
+                <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm)">
+                    <div class="form-group col-12">
+                        <label>Name</label>
+                        <input class="form-control" required ngModel name="userName">
+                    </div>
+                    <div class="form-group col-12 mt-2">
+                        <label>Password</label>
+                        <input type="password" class="form-control" required ngModel name="password">
+                    </div>
+                    <div class="form-group col-12 mt-2">
+                        <button [disabled]="!loginForm.valid" type="submit" class="btn btn-primary">Login</button>
+                        <button type="button" class="btn btn-secondary ms-2">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
