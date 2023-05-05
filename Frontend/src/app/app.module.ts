@@ -4,6 +4,7 @@ import { HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { Routes, RouterModule} from '@angular/router'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { PropertyCardComponent} from './property/property-card/property-card.component';
 import { PropertyListComponent } from './property/property-list/property-list.component';
@@ -12,6 +13,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
+
+import {BsDropdownModule} from 'ngx-bootstrap/dropdown'
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -36,6 +39,8 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
