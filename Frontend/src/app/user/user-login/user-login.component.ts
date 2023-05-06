@@ -13,10 +13,10 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private _authService: AuthService, 
     private _alertify: AlertifyService,
-    private _router: Router) { }
+    private _router: Router
+  ) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onLogin(_form:any){
     console.log(_form.value)

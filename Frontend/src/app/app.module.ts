@@ -14,7 +14,10 @@ import { PropertyDetailComponent } from './property/property-detail/property-det
 import { UserLoginComponent } from './user/user-login/user-login.component';
 import { UserRegisterComponent } from './user/user-register/user-register.component';
 
-import {BsDropdownModule} from 'ngx-bootstrap/dropdown'
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown'
+import { TabsModule } from 'ngx-bootstrap/tabs'
+import { ButtonsModule } from 'ngx-bootstrap/buttons'
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -41,6 +44,9 @@ const appRoutes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    ButtonsModule.forRoot(),
+    BsDatepickerModule.forRoot(),
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,

@@ -94,6 +94,4 @@ export class UserRegisterComponent implements OnInit {
   get mobile() {
     return this.registrationForm.get('mobile') as FormControl
   }
-
-  
 }
