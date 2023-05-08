@@ -7,6 +7,11 @@
     overflow: hidden;
 }
 
+.font-highlight{
+    font-style: italic;
+    color: red;
+}
+
 .card {
     min-height: 400px;
 }

@@ -23,6 +23,12 @@ export class PropertyListComponent implements OnInit {
     this._housingService.getAllProperties(this.sellRent).subscribe(
       data => {
         this.properties = data;
+
+        //let prop = localStorage.getItem('newProp');
+        //if (prop) {
+        //  const newProperty = JSON.parse(prop);
+        //  this.properties = [newProperty, ...this.properties];
+        //} 
         console.log(data);
       }, error =>{
         console.log(error);
