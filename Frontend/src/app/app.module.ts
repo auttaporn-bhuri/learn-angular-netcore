@@ -19,6 +19,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs'
 import { ButtonsModule } from 'ngx-bootstrap/buttons'
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { PropertyDetailResolverService } from './property/property-detail/property-detail-resolver.service';
+import { NgxGalleryModule} from '@kolkov/ngx-gallery'
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -51,7 +52,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(appRoutes)
+    NgxGalleryModule,
+    RouterModule.forRoot(appRoutes),
   ],
   providers: [],
   bootstrap: [AppComponent]
