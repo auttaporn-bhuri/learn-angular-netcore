@@ -2,6 +2,7 @@ using WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data.Repo;
 using WebAPI.Interfaces;
+using WebAPI.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(optios => optios.UseSqlServer(builder.Configuration.GetConnectionString("Default") + ";TrustServerCertificate=true;"));
 builder.Services.AddControllers();
 builder.Services.AddCors(); // After AddControllers
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

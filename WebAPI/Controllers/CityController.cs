@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -14,21 +15,18 @@ namespace WebAPI.Controllers
     public class CityController : ControllerBase {
 
         private readonly IUnitOfWork uow;
-        public CityController(IUnitOfWork _uow) { 
-            this.uow = _uow;  
+        private readonly IMapper mapper;
+
+        public CityController(IUnitOfWork _uow, IMapper _mapper) { 
+            this.uow    = _uow;
+            this.mapper = _mapper;
         } 
 
         [HttpGet]
         public async Task<IActionResult> GetCities() {
             var cities = await uow.cityRepository.GetCitiesAsync();
+            var citiesDto = this.mapper.Map<IEnumerable<CityDto>>(cities);
 
-            var citiesDto = from c in cities
-                            select new CityDto() {
-                                Id = c.Id,
-                                Name = c.Name
-                            };
-
-            //var cities = await dataContext.Cities!.ToListAsync();
             return Ok(citiesDto); 
         }
 
@@ -49,11 +47,9 @@ namespace WebAPI.Controllers
         // Post api/city/post -- Post data in JSON format
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(CityDto cityDto) {
-            var city = new City {
-                Name = cityDto.Name,
-                LastUpdatedBy = 1,
-                LastUpdatedOn = DateTime.Now
-            };
+            var city = this.mapper.Map<City>(cityDto);
+            city.LastUpdatedBy = 1;
+            city.LastUpdatedOn = DateTime.Now;
 
             uow.cityRepository.AddCity(city);
             await uow.SaveAsync();
