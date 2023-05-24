@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using WebAPI.Data;
-using WebAPI.Data.Repo;
+using WebAPI.Dtos;
+using WebAPI.Interfaces;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -12,16 +13,23 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CityController : ControllerBase {
 
-        private readonly ICityRepository repo;
-        public CityController(ICityRepository _repo) { 
-            this.repo = _repo;  
+        private readonly IUnitOfWork uow;
+        public CityController(IUnitOfWork _uow) { 
+            this.uow = _uow;  
         } 
 
         [HttpGet]
         public async Task<IActionResult> GetCities() {
-            var cities = await repo.GetCitiesAsync();
+            var cities = await uow.cityRepository.GetCitiesAsync();
+
+            var citiesDto = from c in cities
+                            select new CityDto() {
+                                Id = c.Id,
+                                Name = c.Name
+                            };
+
             //var cities = await dataContext.Cities!.ToListAsync();
-            return Ok(cities); 
+            return Ok(citiesDto); 
         }
 
         // Post api/city/add?cityName=BKK
@@ -40,17 +48,23 @@ namespace WebAPI.Controllers
 
         // Post api/city/post -- Post data in JSON format
         [HttpPost("post")]
-        public async Task<IActionResult> AddCity(City city) {
-            repo.AddCity(city);
-            await repo.SaveAsync();
+        public async Task<IActionResult> AddCity(CityDto cityDto) {
+            var city = new City {
+                Name = cityDto.Name,
+                LastUpdatedBy = 1,
+                LastUpdatedOn = DateTime.Now
+            };
+
+            uow.cityRepository.AddCity(city);
+            await uow.SaveAsync();
             return StatusCode(201);
         }
 
         // Delete api/city/1 
         [HttpPost("delete/{id}")]
         public async Task<IActionResult> DeleteCity(int id) {
-            repo.DeleteCity(id);
-            await repo.SaveAsync();
+            uow.cityRepository.DeleteCity(id);
+            await uow.SaveAsync();
             //var city = await dataContext.Cities!.FindAsync(id);
             //dataContext.Cities.Remove(city!);
             //await dataContext.SaveChangesAsync();
