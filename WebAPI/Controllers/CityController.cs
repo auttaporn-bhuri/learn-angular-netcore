@@ -47,6 +47,11 @@ namespace WebAPI.Controllers
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity(int id, CityDto cityDto) {
             var cityFromDb = await uow.cityRepository.FindCity(id);
+
+            if (cityFromDb == null)
+                return BadRequest("Update not allowed");
+
+
             cityFromDb.LastUpdatedBy = 1;
             cityFromDb.LastUpdatedOn = DateTime.Now;
 
