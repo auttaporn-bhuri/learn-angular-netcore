@@ -21,6 +21,10 @@ namespace WebAPI.Data.Repo
             this.dc.Cities.Remove(city!);
         }
 
+        public async Task<City> FindCity(int id) {
+            return await dc.Cities.FindAsync(id);
+        }
+
         public async Task<IEnumerable<City>> GetCitiesAsync() {
             return await this.dc.Cities!.ToListAsync();
         }

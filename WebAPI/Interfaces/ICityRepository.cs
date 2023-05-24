@@ -11,6 +11,8 @@ namespace WebAPI.Interfaces
 
         void DeleteCity(int _cityId);
 
+        Task<City> FindCity(int id);
+
         //Task<bool> SaveAsync();
     }
 }

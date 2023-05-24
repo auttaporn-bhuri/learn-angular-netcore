@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -30,20 +31,6 @@ namespace WebAPI.Controllers
             return Ok(citiesDto); 
         }
 
-        // Post api/city/add?cityName=BKK
-        // Post api/city/add/BKK
-        //[HttpPost("add")]
-        //[HttpPost("add/{cityName}")]
-        //public async Task<IActionResult> AddCity(string cityName) {
-        //    var city = new City {
-        //        Name = cityName
-        //    };
-
-        //    await dataContext.Cities!.AddAsync(city);
-        //    await dataContext.SaveChangesAsync();
-        //    return Ok(city);
-        //}
-
         // Post api/city/post -- Post data in JSON format
         [HttpPost("post")]
         public async Task<IActionResult> AddCity(CityDto cityDto) {
@@ -52,6 +39,43 @@ namespace WebAPI.Controllers
             city.LastUpdatedOn = DateTime.Now;
 
             uow.cityRepository.AddCity(city);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+
+        // Put api/city/update -- Put data in JSON format
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateCity(int id, CityDto cityDto) {
+            var cityFromDb = await uow.cityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+
+        // Put api/city/updateCityName -- Put data in JSON format
+        [HttpPut("updateCityName/{id}")]
+        public async Task<IActionResult> UpdateCity(int id, CityUpdateDto cityDto) {
+            var cityFromDb = await uow.cityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+
+            mapper.Map(cityDto, cityFromDb);
+            await uow.SaveAsync();
+            return StatusCode(201);
+        }
+
+        // Patch api/city/update -- Patch data in JSON format
+        [HttpPatch("update/{id}")]
+        public async Task<IActionResult> UpdateCityPatch(int id, JsonPatchDocument<City> cityToPatch) {
+            var cityFromDb = await uow.cityRepository.FindCity(id);
+            cityFromDb.LastUpdatedBy = 1;
+            cityFromDb.LastUpdatedOn = DateTime.Now;
+
+            //mapper.Map(cityToPatch, cityFromDb);
+            cityToPatch.ApplyTo(cityFromDb, ModelState);
             await uow.SaveAsync();
             return StatusCode(201);
         }
@@ -72,5 +96,20 @@ namespace WebAPI.Controllers
         public string Get(int id) {
             return "Atlanta";
         }
+
+        // Post api/city/add?cityName=BKK
+        // Post api/city/add/BKK
+        //[HttpPost("add")]
+        //[HttpPost("add/{cityName}")]
+        //public async Task<IActionResult> AddCity(string cityName) {
+        //    var city = new City {
+        //        Name = cityName
+        //    };
+
+        //    await dataContext.Cities!.AddAsync(city);
+        //    await dataContext.SaveChangesAsync();
+        //    return Ok(city);
+        //}
+
     }
 }

@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<DataContext>(optios => optios.UseSqlServer(builder.Configuration.GetConnectionString("Default") + ";TrustServerCertificate=true;"));
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddCors(); // After AddControllers
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
