@@ -25,6 +25,7 @@ namespace WebAPI.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetCities() {
+            throw new UnauthorizedAccessException();
             var cities = await uow.cityRepository.GetCitiesAsync();
             var citiesDto = this.mapper.Map<IEnumerable<CityDto>>(cities);
 
@@ -46,6 +47,9 @@ namespace WebAPI.Controllers
         // Put api/city/update -- Put data in JSON format
         [HttpPut("update/{id}")]
         public async Task<IActionResult> UpdateCity(int id, CityDto cityDto) {
+            if (id != cityDto.Id)
+                return BadRequest("Update not allowed");
+
             var cityFromDb = await uow.cityRepository.FindCity(id);
 
             if (cityFromDb == null)
@@ -56,6 +60,7 @@ namespace WebAPI.Controllers
             cityFromDb.LastUpdatedOn = DateTime.Now;
 
             mapper.Map(cityDto, cityFromDb);
+            throw new Exception("Some unknown error occured");
             await uow.SaveAsync();
             return StatusCode(201);
         }
