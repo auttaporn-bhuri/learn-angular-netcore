@@ -7,6 +7,9 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using WebAPI.Extensions;
 using WebAPI.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,18 @@ builder.Services.AddCors(); // After AddControllers
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+var secretKey = builder.Configuration.GetSection("AppSettings:Key").Value;
+var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey!));
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt => {
+        opt.TokenValidationParameters = new TokenValidationParameters {
+            ValidateIssuerSigningKey = true,
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            IssuerSigningKey = key,
+        };
+    });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -59,6 +74,7 @@ app.UseHttpsRedirection();
 
 app.UseCors(m => m.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());  // Before UseAuthorization and After Routing Middleware
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
