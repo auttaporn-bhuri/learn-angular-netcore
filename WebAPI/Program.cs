@@ -26,10 +26,14 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-//var env = builder.Environment;
-//app.ConfigureExceptionHandler(env);
+var env = builder.Environment;
+app.ConfigureExceptionHandler(env);
+//app.ConfigureBuiltinExceptionHandler(env);
 
-app.UseMiddleware<ExceptionMiddleware>();
+//app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 //if (app.Environment.IsDevelopment()) {
 //    app.UseSwagger();
